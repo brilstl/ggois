@@ -1,0 +1,18 @@
+Package: ggois
+Title: This package has some convenient wrappers on ggplot2 for OIS dep. of the municipality of Amsterdam
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Tobias",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "t.brils@amsterdam.nl",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package has some convenient wrappers on ggplot2 for OIS dep. of the municipality of Amsterdam.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    ggplot2
