@@ -46,3 +46,20 @@ autoplot.bar_chart <- function(object, ...){
 
 
 }
+
+#' @export
+autotable <- function(object, ...) {
+  UseMethod("autotable")
+}
+
+#' @importFrom gt gt fmt_percent
+#' @export
+autotable.bar_chart <- function(object, ...){
+
+  object %>%
+    dplyr::mutate(percent = percent) %>%
+    gt::gt() %>%
+    gt::fmt_percent(percent,
+                    decimals = 0L)
+
+}
