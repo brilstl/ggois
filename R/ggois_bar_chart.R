@@ -23,7 +23,7 @@ ggois_bar_chart.data.frame <- function(.data, y, x){
 
 }
 
-
+#' @export
 autoplot.bar_chart <- function(object, ...){
 
   `%+%` <- ggplot2::`%+%`
