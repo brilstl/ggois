@@ -15,5 +15,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    forcats,
     ggplot2,
-    gt
+    gt,
+    scales
+Depends: 
+    R (>= 2.10)
