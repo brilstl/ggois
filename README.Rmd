@@ -70,7 +70,8 @@ example_bar %>%
 
 ```{r}
 example_bar %>% 
-  autotable()
+  autotable() %>% 
+  gt::as_raw_html()
 ```
 
 # likert plot
@@ -94,7 +95,8 @@ example_likert %>%
 
 ```{r}
 example_likert %>% 
-  autotable()
+  autotable() %>% 
+  gt::as_raw_html()
 ```
 
 
