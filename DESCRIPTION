@@ -18,6 +18,10 @@ Imports:
     forcats,
     ggplot2,
     gt,
-    scales
+    jsonlite,
+    scales,
+    tidyr,
+    tidyselect,
+    vegawidget
 Depends: 
     R (>= 2.10)

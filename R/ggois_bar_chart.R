@@ -1,21 +1,37 @@
 #' @title helper function to make a bar chart
+#' @param .data a data.frame tibble or data.table
+#' @param y dependent variable in the equation
+#' @param x the independent variable in the equaion
 
 #' @export
+#' @param object a ggois object
 ggois_bar_chart <- function(.data, ...) UseMethod("ggois_bar_chart")
 
 #' @export
 #' @importFrom dplyr select mutate summarise
-ggois_bar_chart.data.frame <- function(.data, y, x){
+ggois_bar_chart.data.frame <- function(.data, y, x, ...){
 
   `%>%` <- dplyr::`%>%`
+
+  .data_labels <-
+    .data %>%
+    select({{y}}, {{x}}) %>%
+    names
 
 
   .data <-
     .data %>%
     dplyr::group_by(.y = {{y}}) %>%
     dplyr::summarise(.waarde := sum({{x}}, na.rm = TRUE)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(percent = .waarde/sum(.waarde)) %>%
     dplyr::group_by(.y)
+
+  #.data_labels <- c(.data_labels, "waarde", "percentage")
+
+  attr(.data$.y, "label") <- .data_labels[1]
+  attr(.data$.waarde, "label") <- .data_labels[2]
+  attr(.data$percent, "label") <- .data_labels[2]
 
   class(.data) <- c("bar_chart", class(.data))
 
@@ -24,6 +40,7 @@ ggois_bar_chart.data.frame <- function(.data, y, x){
 }
 #' @importFrom forcats as_factor fct_reorder fct_relevel fct_other
 #' @importFrom scales percent dollar_format
+#' @param object a ggois object
 #' @export
 autoplot.bar_chart <- function(object, percent = FALSE, ...){
 
@@ -60,7 +77,7 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
 
     object <-
       object %>%
-      ungroup %>%
+      dplyr::ungroup() %>%
       mutate(.y = forcats::fct_reorder(.y, percent))
 
     aes_spliced <- ggplot2::aes(
@@ -77,6 +94,7 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
 
     object <-
       object %>%
+      dplyr::ungroup() %>%
       mutate(.y = forcats::fct_reorder(.y, .waarde))
 
     aes_spliced <- ggplot2::aes(
@@ -123,7 +141,8 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
     geen_antwoord %+%
     x_as %+%
     ggplot2::theme(
-      panel.grid.major.y = element_blank()
+      panel.grid.major.y = element_blank(),
+      panel.grid.major.x = ggplot2::element_line(size = 1.2)
     )
 
 
@@ -133,11 +152,13 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
 }
 
 #' @export
+#' @param object a ggois object
 autotable <- function(object, ...) {
   UseMethod("autotable")
 }
 
 #' @importFrom gt gt fmt_percent
+#' @param object a ggois object
 #' @export
 autotable.bar_chart <- function(object, ...){
 
@@ -161,5 +182,46 @@ autotable.bar_chart <- function(object, ...){
     gt::gt() %>%
     gt::fmt_percent(percent,
                     decimals = 0L)
+
+}
+
+#' @export
+#' @param object a ggois object
+autovega <- function(object, ...){
+  UseMethod("autovega")
+}
+
+#' @import vegawidget
+#' @import jsonlite
+#' @export
+#' @param object a ggois object
+#' @param height the height of the vega object
+#' @param titel the title of the vegaplot
+
+autovega.bar_chart <- function(object, height = NULL, ...){
+
+  bar_json$encoding$tooltip[[1]]$title <- attr(object$.y, "label")
+  bar_json$encoding$tooltip[[2]]$title <- attr(object$.waarde, "label")
+
+  bar_json$data$values <-
+    object %>%
+    rename(naam = .y,
+           waarde = .waarde) %>%
+    arrange(- waarde) %>%
+    jsonlite::toJSON() %>%
+    jsonlite::parse_json()
+
+  if(is.null(height)){
+
+  }
+  else{
+    bar_json$height <- height
+  }
+
+  bar_json[["config"]] <- vega_config
+
+  bar_json %>%
+    vegawidget::as_vegaspec() %>%
+    vegawidget::vegawidget()
 
 }

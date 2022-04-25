@@ -1,0 +1,103 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ggois
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of `ggois` is to make plots for in O&S style. 
+
+## Installation
+
+You can install the released version of ggois from [github](https://github.com/brilstl/ggois) with:
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("brilstl/ggois")
+```
+
+## Example
+
+This is a basic example of a plot with the `theme_ois()` function:
+
+```{r example}
+
+library(ggois)
+library(tidyverse)
+
+diamonds %>% 
+  ggplot(
+  aes(
+    x = price,
+    y = cut
+  )
+) +
+  geom_boxplot(colour = os_colours$red) +
+  theme_ois()
+
+```
+
+`ggois` also has some convenient to make tables and plots. The packags works with a basic idea of algebra formulation such as `y ~ x`. With a possible moderator, namely: `y ~ x*z`. 
+
+# bar plot
+
+```{r cars}
+example_bar <- diamonds %>% 
+  ggois_bar_chart(cut, price)
+
+
+example_bar
+```
+
+## plot
+
+```{r}
+example_bar %>% 
+  autoplot()
+```
+
+## table
+
+```{r}
+example_bar %>% 
+  autotable()
+```
+
+# likert plot
+
+```{r}
+example_likert <- diamonds %>% 
+  ggois_likert_chart(cut, clarity)
+
+
+example_likert
+```
+
+## plot
+
+```{r}
+example_likert %>% 
+  autoplot()
+```
+
+## table
+
+```{r}
+example_likert %>% 
+  autotable()
+```
+
+
