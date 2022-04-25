@@ -49,7 +49,7 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
   gray_check <- gray_shades(object, .y, dim_output = TRUE, ...)
 
   if(is.na(gray_check[1])){
-    geen_antwoord <- ggplot2::scale_fill_manual(values = c("#71BDEE"))
+    geen_antwoord <- ggplot2::scale_fill_manual(values = c(os_colours$lightblue))
 
   }
   else{
@@ -58,7 +58,7 @@ autoplot.bar_chart <- function(object, percent = FALSE, ...){
 
     gray_add <- brew_gray(length(gray_check))
 
-    kleur <- c(gray_add, "#71BDEE")
+    kleur <- c(gray_add, os_colours$lightblue)
 
     geen_antwoord <- ggplot2::scale_fill_manual(values = kleur)
 
