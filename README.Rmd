@@ -24,7 +24,7 @@ The goal of `ggois` is to make plots for in O&S style.
 
 You can install the released version of ggois from [github](https://github.com/brilstl/ggois) with:
 
-```{r}
+```{r eval= FALSE}
 # install.packages("devtools")
 devtools::install_github("brilstl/ggois")
 ```
@@ -33,24 +33,21 @@ devtools::install_github("brilstl/ggois")
 
 This is a basic example of a plot with the `theme_ois()` function:
 
-```{r example}
+```{r dpi=300, fig.height=3}
 
 library(ggois)
 library(tidyverse)
 
 diamonds %>% 
   ggplot(
-  aes(
-    x = price,
-    y = cut
-  )
-) +
+  aes(x = price,
+      y = cut)) +
   geom_boxplot(colour = os_colours$red) +
   theme_ois()
 
 ```
 
-`ggois` also has some convenient to make tables and plots. The packags works with a basic idea of algebra formulation such as `y ~ x`. With a possible moderator, namely: `y ~ x*z`. 
+`ggois` also has some convenient to make tables and plots. The packages works with a basic idea of ols algebra formulation such as `y ~ x`. With a possible moderator, namely: `y ~ x*z`. The packages has functions such as `ggois_bar_chart` and `ggois_likert_chart`, which create a summary `tibble`. The summary table inherits a class, by which the functions `autoplot` and `autotable` know how to interpret the data for plotting and creating tables. See examples below:
 
 # bar plot
 
@@ -64,7 +61,7 @@ example_bar
 
 ## plot
 
-```{r}
+```{r fig.height=3, dpi = 300}
 example_bar %>% 
   autoplot()
 ```
@@ -88,7 +85,7 @@ example_likert
 
 ## plot
 
-```{r}
+```{r dpi=300, fig.height=3}
 example_likert %>% 
   autoplot()
 ```

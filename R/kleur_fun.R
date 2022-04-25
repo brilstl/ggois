@@ -1,7 +1,7 @@
 #' @title kleuren brewer voor OIS huisstijl
 #' @param dim het aantal unieke waardes in de fill
 #' @export
-kleur_fun <- function(dim, pal = kleuren$blauw){
+kleur_fun <- function(dim, pal = c(os_colours$darkblue, os_colours$grey3, os_colours$lightblue)){
 
   kleur <- pal
 
