@@ -103,7 +103,7 @@ example_likert %>%
 
 # likert plot with moderator
 
-```{r}
+```{r }
 example_likert <- diamonds %>% 
   filter(color %in% c("D", "E", "F")) %>% 
   ggois_likert_chart(cut, clarity, color)
@@ -114,7 +114,7 @@ example_likert
 
 ## plot
 
-```{r dpi=300, fig.height=3}
+```{r dpi=300, fig.height=9}
 example_likert %>% 
   autoplot()
 ```
@@ -129,10 +129,10 @@ example_likert %>%
 
 # changing colors
 
-```{r}
+```{r dpi=300, fig.height=9}
 
 example_likert %>% 
-  autoplot(palette = c(os_colours$pink, os_colours$purple, os_colours$red))
+  autoplot(palette = c(os_colours$pink, "white", os_colours$red))
 
 ```
 
