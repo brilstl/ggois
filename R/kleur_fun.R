@@ -4,7 +4,7 @@
 #' @export
 kleur_fun <- function(dim, palette = c(os_colours$darkblue, os_colours$grey3, os_colours$lightblue)){
 
-  kleur <- pal
+  kleur <- palette
 
   if(dim < 3){
 
