@@ -22,7 +22,7 @@ The goal of `ggois` is to make plots for in O&S style.
 
 ## Installation
 
-You can install the released version of ggois from [github](https://github.com/brilstl/ggois) with:
+You can install ggois from [github](https://github.com/brilstl/ggois) with:
 
 ```{r eval= FALSE}
 # install.packages("devtools")
@@ -38,6 +38,8 @@ This is a basic example of a plot with the `theme_ois()` function:
 library(ggois)
 library(tidyverse)
 
+# plot ----
+
 diamonds %>% 
   ggplot(
   aes(x = price,
@@ -47,7 +49,7 @@ diamonds %>%
 
 ```
 
-`ggois` also has some convenient to make tables and plots. The packages works with a basic idea of ols algebra formulation such as `y ~ x`. With a possible moderator, namely: `y ~ x*z`. The packages has functions such as `ggois_bar_chart` and `ggois_likert_chart`, which create a summary `tibble`. The summary table inherits a class, by which the functions `autoplot` and `autotable` know how to interpret the data for plotting and creating tables. See examples below:
+`ggois` also has some convenient functions for making tables and plots. The package is designed in a (generalized) linear algebra fashion (`y ~ x`). This means that every functions includes the paramters `data`, `y` and `x`. Some functions also allow for a moderator (`y ~ x*z`). The packages has functions such as `ggois_bar_chart` and `ggois_likert_chart`, which create a summary `tibble`. The summary `tibble` inherits a class, by which the functions `autoplot` and `autotable` know how to interpret the data for plotting and creating tables. See examples below:
 
 # bar plot
 
@@ -99,4 +101,38 @@ example_likert %>%
   gt::as_raw_html()
 ```
 
+# likert plot with moderator
+
+```{r}
+example_likert <- diamonds %>% 
+  filter(color %in% c("D", "E", "F")) %>% 
+  ggois_likert_chart(cut, clarity, color)
+
+
+example_likert
+```
+
+## plot
+
+```{r dpi=300, fig.height=3}
+example_likert %>% 
+  autoplot()
+```
+
+## table
+
+```{r}
+example_likert %>% 
+  autotable() %>% 
+  gt::as_raw_html()
+```
+
+# changing colors
+
+```{r}
+
+example_likert %>% 
+  autoplot(palette = c(os_colours$pink, os_colours$purple, os_colours$red))
+
+```
 

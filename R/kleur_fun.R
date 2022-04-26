@@ -1,7 +1,8 @@
 #' @title kleuren brewer voor OIS huisstijl
 #' @param dim het aantal unieke waardes in de fill
+#' @param palette a vector of colors
 #' @export
-kleur_fun <- function(dim, pal = c(os_colours$darkblue, os_colours$grey3, os_colours$lightblue)){
+kleur_fun <- function(dim, palette = c(os_colours$darkblue, os_colours$grey3, os_colours$lightblue)){
 
   kleur <- pal
 
